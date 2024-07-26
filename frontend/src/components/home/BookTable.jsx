@@ -50,7 +50,6 @@ const BooksTable = ({ books }) => {
             </td>
           </tr>
         ))}
-
       </tbody>
     </table>
   );
