@@ -9,3 +9,7 @@ export const createBookHandler = (data) => {
 export const getAllBooksHandler = () => {
   return axios.get(API_URL);
 }
+
+export const getBookHandler = (id) => {
+  return axios.get(`${API_URL}/${id}`);
+}

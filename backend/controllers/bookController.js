@@ -1,6 +1,6 @@
 const Book = require("../models/bookModel");
 
-const createBook = async (req, res) => {
+const createBook = async (req, res, next) => {
   try {
     // Check if all the required fields are provided
     if (!req.body.title || !req.body.author || !req.body.publishYear) {
@@ -34,7 +34,7 @@ const createBook = async (req, res) => {
 
 module.exports = { createBook };
 
-const getAllBooks = async (req, res) => {
+const getAllBooks = async (req, res, next) => {
   try {
     // find all books in the database
     const books = await Book.find({});
@@ -52,7 +52,7 @@ const getAllBooks = async (req, res) => {
   }
 }
 
-const getBook = async (req, res) => {
+const getBook = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -78,7 +78,7 @@ const getBook = async (req, res) => {
   }
 }
 
-const updateBook = async (req, res) => {
+const updateBook = async (req, res, next) => {
   try {
     if (
       !req.body.title ||
@@ -109,7 +109,7 @@ const updateBook = async (req, res) => {
   }
 }
 
-const deleteBook = async (req, res) => {
+const deleteBook = async (req, res, next) => {
   try {
     const { id } = req.params;
 
