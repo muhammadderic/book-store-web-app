@@ -28,11 +28,7 @@ const createBook = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({
-      success: false,
-      message: 'An error occurred while creating the book',
-      error: error.message,
-    });
+    next();
   }
 };
 
@@ -52,11 +48,7 @@ const getAllBooks = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({
-      success: false,
-      message: 'An error occurred while creating the book',
-      error: error.message,
-    });
+    next();
   }
 }
 
@@ -82,20 +74,59 @@ const getBook = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({
-      success: false,
-      message: 'An error occurred while creating the book',
-      error: error.message,
-    });
+    next();
   }
 }
 
 const updateBook = async (req, res) => {
-  res.send("Update a book");
+  try {
+    if (
+      !req.body.title ||
+      !req.body.author ||
+      !req.body.publishYear
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Send all required fields: title, author, publishYear",
+      });
+    }
+
+    const { id } = req.params;
+
+    const result = await Book.findByIdAndUpdate(id, req.body);
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: `Book with ID ${id} was not found`,
+      });
+    }
+
+    return res.status(200).send({ message: 'Book updated successfully' });
+  } catch (error) {
+    console.log(error.message);
+    next();
+  }
 }
 
 const deleteBook = async (req, res) => {
-  res.send("Delete a book");
+  try {
+    const { id } = req.params;
+
+    const result = await Book.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: `Book with ID ${id} was not found`,
+      });
+    }
+
+    return res.status(200).send({ message: 'Book deleted successfully' });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
 }
 
 module.exports = {
