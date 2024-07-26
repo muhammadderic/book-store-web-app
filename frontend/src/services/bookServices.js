@@ -13,3 +13,7 @@ export const getAllBooksHandler = () => {
 export const getBookHandler = (id) => {
   return axios.get(`${API_URL}/${id}`);
 }
+
+export const editBookHandler = (id, data) => {
+  return axios.put(`${API_URL}/${id}`, data);
+}
