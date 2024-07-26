@@ -17,3 +17,7 @@ export const getBookHandler = (id) => {
 export const editBookHandler = (id, data) => {
   return axios.put(`${API_URL}/${id}`, data);
 }
+
+export const deleteBookHandler = (id) => {
+  return axios.delete(`${API_URL}/${id}`);
+}
