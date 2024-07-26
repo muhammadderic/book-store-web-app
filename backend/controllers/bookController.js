@@ -61,7 +61,33 @@ const getAllBooks = async (req, res) => {
 }
 
 const getBook = async (req, res) => {
-  res.send("Get one book by ID");
+  try {
+    const { id } = req.params;
+
+    // find a book in the database
+    const book = await Book.findById(id);
+
+    // Check if the book exists
+    if (!book) {
+      return res.status(404).json({
+        success: false,
+        message: `Book with ID ${id} was not found`,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "The book fetched successfully",
+      data: book,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while creating the book',
+      error: error.message,
+    });
+  }
 }
 
 const updateBook = async (req, res) => {
