@@ -1,3 +1,5 @@
+const Book = require("../models/bookModel");
+
 const createBook = async (req, res) => {
   res.send("Create a book");
 }
