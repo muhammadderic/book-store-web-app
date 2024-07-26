@@ -1,8 +1,42 @@
 const Book = require("../models/bookModel");
 
 const createBook = async (req, res) => {
-  res.send("Create a book");
-}
+  try {
+    // Check if all the required fields are provided
+    if (!req.body.title || !req.body.author || !req.body.publishYear) {
+      return res.status(400).json({
+        success: false,
+        message: 'All fields are required: title, author, publishYear',
+      });
+    }
+
+    // Create a new book object
+    const newBook = {
+      title: req.body.title,
+      author: req.body.author,
+      publishYear: req.body.publishYear,
+    };
+
+    // Use the Book model to create a new book in the database
+    const book = await Book.create(newBook);
+
+    // Send a 201 status code with a success message and the created book object
+    return res.status(201).json({
+      success: true,
+      message: 'Book created successfully',
+      data: book,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while creating the book',
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createBook };
 
 const getAllBooks = async (req, res) => {
   res.send("Get all books");

@@ -12,7 +12,7 @@ const {
  * @route     POST /books
  * @desc      Save a new book
  * @access    Public
- * @body      { title, author, publishedYear, }
+ * @body      { title, author, publishYear, }
  * @response  201 Created - Book saved successfully
  */
 router.post('/books', createBook);
